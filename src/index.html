@@ -36,5 +36,17 @@
 </body>
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=YOUR_KEY_HERE"></script>
-
+<script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBCiaiTbxYb-KAgi7dR36qwpnEAfCscsgs",
+    authDomain: "music-store-87d22.firebaseapp.com",
+    databaseURL: "https://music-store-87d22.firebaseio.com",
+    projectId: "music-store-87d22",
+    storageBucket: "music-store-87d22.appspot.com",
+    messagingSenderId: "243088971993"
+  };
+  firebase.initializeApp(config);
+</script>
 </html>

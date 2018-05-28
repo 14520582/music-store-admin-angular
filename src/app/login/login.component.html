@@ -1,0 +1,19 @@
+<div class="dialog-container">
+  <form [formGroup]="loginForm">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img src="../../../logo-findhouse.png" height="37" width="37">
+      <div class="name">FindHouse</div>
+      <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="password">
+      </mat-form-field>
+      <div class="err">{{error}}</div>
+      <mat-checkbox>Nhớ tài khoản</mat-checkbox>
+      <button mat-raised-button (click)="onLogin()">Đăng nhập</button>
+      <a>Quên mật khẩu?</a>
+    </div>
+  </form>
+</div>
+<!-- <div></div> -->

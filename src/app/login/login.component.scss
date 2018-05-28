@@ -1,0 +1,33 @@
+.dialog-container {
+    height: 420px;
+    width: 300px;
+}
+.name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 4px;
+    margin-bottom: 30px;
+}
+mat-form-field {
+    width: 80%
+}
+mat-checkbox {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    width: 80%;
+}
+.err {
+    color: red;
+    font-size: 12px;
+}
+button {
+    width: 80%;
+    background-color: rgb(46, 128, 221);
+    color: white;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+a {
+    width: 80%;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+}

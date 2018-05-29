@@ -1,9 +1,9 @@
 interface IArtist {
     id: number;
-    name: string;
-    sex: number;
-    yearofbirth: number;
-    country: ICountry
+    name?: string;
+    sex?: number;
+    yearofbirth?: number;
+    country?: ICountry
 }
 interface ICountry {
     id?: number;
@@ -11,20 +11,30 @@ interface ICountry {
 }
 interface IGenre {
     id?: number;
-    name: string
+    name?: string
 }
 interface ICategory {
     id?: number;
     name: string
 }
+interface ISong {
+    id?: number;
+    name?: string;
+    genre?: IGenre;
+    singer?: IArtist;
+    album?: any;
+}
 interface IAlbum {
-    id: number;
+    id?: number;
     name: string;
     price: number;
     genre: IGenre;
     artist: IArtist;
     releasedate: number;
-    cover: string
+    cover: string;
+    quantity: number;
+    songs?: ISong[];
+    description: string
 }
 interface IRealEstate {
     id: number;
@@ -45,10 +55,21 @@ interface IUser {
     role: string;
     token: string;
 }
+class FileUpload {
+ 
+    key: string;
+    name: string;
+    url: string;
+    file: File;
+    constructor() {
+    }
+
+}
 export {
     IArtist,
     IAlbum,
     IGenre,
     ICountry,
+    FileUpload,
     IUser
 };

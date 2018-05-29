@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/catch';
 import { catchError, map, tap } from 'rxjs/operators'
-import { MatDialogRef } from '@angular/material';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 @Component({
@@ -17,7 +16,6 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   error: string = '';  
   constructor(
-    private dialogRef: MatDialogRef<LoginComponent>,
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {

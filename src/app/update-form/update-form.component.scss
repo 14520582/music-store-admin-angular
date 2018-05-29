@@ -1,18 +1,29 @@
+.dialog-container{
+    width: 600px;
+}
+.full-width {
+    width: 100%;
+}
+.margin-left {
+    margin-left: 6px;
+}
+.margin-right {
+    margin-right: 6px;
+}
 .book-row {
     margin-top: 8px;
     margin-bottom: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid gray;
+    div {
+        font-size: 12px;
+    }
 }
 span{
     font-weight: bold;
 }
 .header-table{
     border-bottom: 1px solid gray;
-}
-.search-form-field {
-    width: 200px;
-    margin-top: 16px;
 }
 .add-btn {
     margin-right: 8px;

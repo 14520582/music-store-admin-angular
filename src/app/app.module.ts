@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import {CdkTableModule} from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
+import { HttpClientModule } from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from './material.module';
 import { AppRoutingModule } from './app.routing';
@@ -26,8 +27,14 @@ import { AuthService } from './services/auth.service';
 import { AlbumService } from './services/album.service';
 import { OrderService } from './services/order.service';
 import { LoginComponent } from './login/login.component';
-
-
+import { UpdateFormComponent } from './update-form/update-form.component';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MyDateAdapter } from './utils/my-date-adapter'
+import { Constant } from './utils/constant';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+import { FirebaseService } from './services/firebase.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,15 +46,19 @@ import { LoginComponent } from './login/login.component';
     MapsComponent,
     NotificationsComponent,
     LoginComponent,
-    UpgradeComponent
+    UpgradeComponent,
+    UpdateFormComponent
 
   ],
+  entryComponents: [UpdateFormComponent],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     BrowserAnimationsModule,
     NavbarModule,
+    ReactiveFormsModule,
     FooterModule,
     FlexLayoutModule,
     SidebarModule,
@@ -55,9 +66,18 @@ import { LoginComponent } from './login/login.component';
     RouterModule,
     CdkTableModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
     LbdModule
   ],
-  providers: [AuthService, AlbumService, OrderService],
+  providers: [
+    {provide: DateAdapter, useClass: MyDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: Constant.MY_DATE_FORMATS},
+    AuthService, 
+    AlbumService, 
+    OrderService,
+    FirebaseService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

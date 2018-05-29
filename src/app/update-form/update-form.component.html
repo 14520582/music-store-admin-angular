@@ -1,0 +1,105 @@
+<div class="dialog-container">
+  <h3 mat-dialog-title>{{data.type === 1 ? "Add New Album" : "Edit This Album"}}</h3>
+  <form [formGroup]="albumForm">
+    <div class="form-group" fxLayout="column">
+      <div fxLayout="row">
+        <mat-form-field color="accent" style="width: 50px; margin-right: 6px" *ngIf="data.album">
+          <input matInput placeholder="Id" value={{data.album.id}} readonly>
+        </mat-form-field>
+        <mat-form-field color="accent" class="full-width">
+          <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="margin-right">
+          <mat-select placeholder="Select album's artist" formControlName="artist">
+            <mat-option *ngFor="let artist of data.artists" [value]="artist">{{artist.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="margin-right">
+          <mat-select placeholder="Select album's genre" formControlName="genre">
+            <mat-option *ngFor="let genre of data.genres" [value]="genre">{{genre.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field color="accent" class="full-width">
+          <input matInput placeholder="Price" formControlName="price">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field color="accent" class="margin-right">
+          <input matInput placeholder="Quantity" formControlName="quantity">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput [matDatepicker]="picker" placeholder="Release Date" formControlName="releasedate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <mat-radio-group formControlName="coverOption">
+        <mat-radio-button [value]="1" checked>Url</mat-radio-button>
+        <mat-radio-button [value]="2">Upload file</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field color="accent" *ngIf="albumForm.controls['coverOption'].value == 1">
+        <input matInput placeholder="Cover" formControlName="cover">
+      </mat-form-field>
+      <div *ngIf="albumForm.controls['coverOption'].value == 2">
+        <div *ngIf="currentFileUpload" class="progress">
+          <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+            aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+            {{progress.percentage}}%</div>
+        </div>
+        <label class="btn btn-default">
+          <input type="file" (change)="selectFile($event)">
+        </label>
+        <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+      </div>
+      <mat-form-field color="accent">
+        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+      </mat-form-field>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              List songs
+            </mat-panel-title>
+            <mat-panel-description>
+              {{albumForm.controls['songs'].value.length}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="header-table">
+              <span fxFlex="40" class="span-header">Name</span>
+              <span fxFlex="30" class="span-header">Singer</span>
+              <span fxFlex="15" class="span-header">Genre</span>
+              <span fxFlex class="span-header">Actions</span>
+          </div>
+          <div class="book-row" *ngFor="let song of albumForm.controls['songs'].value" fxLayout="row" fxLayoutAlign="space-between center">
+              <div fxFlex="40" fxLayoutAlign="center center">{{song.name}}</div>
+              <div fxFlex="30" fxLayoutAlign="center center">{{song.singer.name}}</div>
+              <div fxFlex="15" fxLayoutAlign="center center">{{song.genre.name}}</div>
+              <div fxFlex fxLayoutAlign="center center"><mat-icon>close</mat-icon></div>
+          </div>
+          <div fxLayout="row">
+            <mat-form-field color="accent" class="margin-right">
+              <input matInput placeholder="Song's name" formControlName="nameSong">
+            </mat-form-field>
+            <mat-form-field class="margin-right">
+              <mat-select placeholder="Select song's singer" formControlName="singerSong">
+                <mat-option *ngFor="let artist of data.artists" [value]="artist">{{artist.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Select song's genre" formControlName="genreSong">
+                <mat-option *ngFor="let genre of data.genres" [value]="genre">{{genre.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" (click)="addSong()">Add song</button>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="!albumForm.valid" (click)="confirm()">Save</button>
+        <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

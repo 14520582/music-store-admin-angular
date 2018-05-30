@@ -17,8 +17,6 @@ import { UpdateFormComponent }  from '../update-form/update-form.component'
 })
 export class TablesComponent implements OnInit {
   albums : IAlbum[];
-  dataGenres: IGenre[];
-  dataArtists: IArtist[];
   totalOfAlbums: number = 0;
   isSearching: boolean = false;
   searchTerm: string = '';
@@ -29,12 +27,6 @@ export class TablesComponent implements OnInit {
     this.albumService.pageSubject.subscribe( page => {
       this.albums = page.content;
       this.totalOfAlbums = page.totalElements;
-    })
-    this.albumService.getAllGenres().subscribe( data => {
-      this.dataGenres = data
-    })
-    this.albumService.getAllArtists().subscribe( data => {
-      this.dataArtists = data
     })
   }
   ngOnInit() {
@@ -56,9 +48,10 @@ export class TablesComponent implements OnInit {
   }
   // 1: add, 0: edit
   openDialog(type : number, payload?: IAlbum) {
-    this.dialog.open(UpdateFormComponent, {data: {type: type, album: payload ? payload : null, genres: this.dataGenres, artists: this.dataArtists}});
+    this.dialog.open(UpdateFormComponent, {data: {type: type, album: payload ? payload : null}});
   }
-  onRemove(item : IAlbum) {
-    this.albumService.remove(item)
+
+  onChangeStatus(id: number) {
+    this.albumService.changeAlbumStatus(id);
   }
 }

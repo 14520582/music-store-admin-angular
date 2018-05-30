@@ -1,0 +1,25 @@
+<div class="main-content">
+    <div class="header-table">
+        <span fxFlex="10">ID</span>
+        <span fxFlex="15" class="span-header">Customer</span>
+        <span fxFlex="15" class="span-header">Phone</span>
+        <span fxFlex="15" class="span-header">Email</span>
+        <span fxFlex="10" class="span-header">Date</span>
+        <span fxFlex="15" class="span-header">Status</span>
+        <span fxFlex class="span-header">Actions</span>
+    </div>
+    <div class="book-row" *ngFor="let item of orders" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxFlex="10">{{item.id}}</div>
+        <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.name}}</div>
+        <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.phone}}</div>
+        <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.email}}</div>
+        <div fxFlex="10" fxLayoutAlign="center center">{{item.date | date:'dd-MM-yyyy'}}</div>
+        <div fxFlex="15" fxLayoutAlign="center center" [ngStyle]="{'color': getColor(item.status)}">{{item.status | orderStatus}}</div>
+        <div fxLayout="row" fxFlex fxLayoutAlign="center center">
+            <button mat-raised-button color="warn" *ngIf="item.status !== 2" (click)="nextStatus(item.id)">{{getTitleButton(item.status)}}</button>
+        </div>
+    </div>
+    <mat-paginator [length]="totalOfOrders" [pageSize]="10" (page)="onPaginateChange($event)">
+    </mat-paginator>
+</div>
+<!-- <div>d</div> -->

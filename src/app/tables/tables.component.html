@@ -42,8 +42,8 @@
             <button mat-fab color="primary" class="add-btn" (click)="openDialog(0,item)">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-raised-button color="warn" *ngIf="item.status === 0" (click)="onRemove(item)">Re-stock</button>
-            <button mat-raised-button color="warn" *ngIf="item.status === 1" (click)="onRemove(item)">Sold out</button>
+            <button mat-raised-button color="warn" *ngIf="item.status === 0" (click)="onChangeStatus(item.id)">Re-stock</button>
+            <button mat-raised-button color="warn" *ngIf="item.status === 1" (click)="onChangeStatus(item.id)">Sold out</button>
         </div>
     </div>
     <mat-paginator [length]="totalOfAlbums" [pageSize]="10" (page)="onPaginateChange($event)">

@@ -13,12 +13,12 @@
       <div fxLayout="row">
         <mat-form-field class="margin-right">
           <mat-select placeholder="Select album's artist" formControlName="artist">
-            <mat-option *ngFor="let artist of data.artists" [value]="artist">{{artist.name}}</mat-option>
+            <mat-option *ngFor="let artist of dataArtists" [value]="artist">{{artist.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="margin-right">
           <mat-select placeholder="Select album's genre" formControlName="genre">
-            <mat-option *ngFor="let genre of data.genres" [value]="genre">{{genre.name}}</mat-option>
+            <mat-option *ngFor="let genre of dataGenres" [value]="genre">{{genre.name}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field color="accent" class="full-width">
@@ -72,11 +72,11 @@
               <span fxFlex="15" class="span-header">Genre</span>
               <span fxFlex class="span-header">Actions</span>
           </div>
-          <div class="book-row" *ngFor="let song of albumForm.controls['songs'].value" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="book-row" *ngFor="let song of albumForm.controls['songs'].value; let i = index" fxLayout="row" fxLayoutAlign="space-between center">
               <div fxFlex="40" fxLayoutAlign="center center">{{song.name}}</div>
               <div fxFlex="30" fxLayoutAlign="center center">{{song.singer.name}}</div>
               <div fxFlex="15" fxLayoutAlign="center center">{{song.genre.name}}</div>
-              <div fxFlex fxLayoutAlign="center center"><mat-icon>close</mat-icon></div>
+              <div fxFlex fxLayoutAlign="center center"><button mat-fab color="primary" (click)="deleteSong(i)"><mat-icon>close</mat-icon></button></div>
           </div>
           <div fxLayout="row">
             <mat-form-field color="accent" class="margin-right">

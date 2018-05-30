@@ -26,15 +26,16 @@ interface ISong {
 }
 interface IAlbum {
     id?: number;
-    name: string;
-    price: number;
-    genre: IGenre;
-    artist: IArtist;
-    releasedate: number;
-    cover: string;
-    quantity: number;
+    name?: string;
+    price?: number;
+    genre?: IGenre;
+    artist?: IArtist;
+    releasedate?: number;
+    cover?: string;
+    quantity?: number;
     songs?: ISong[];
-    description: string
+    status?: number;
+    description?: string
 }
 interface IRealEstate {
     id: number;
@@ -45,6 +46,19 @@ interface IRealEstate {
     area: string;
     type: string;
     cover: string
+}
+interface IOrder {
+    id?: number;
+    date: number;
+    details?: IDetailsOrder[];
+    customer?: IUser;
+    status?: number
+}
+interface IDetailsOrder {
+    id?: number;
+    quantity?: number;
+    album?: IAlbum;
+    order?: IOrder
 }
 interface IUser {
     id: number;
@@ -71,5 +85,8 @@ export {
     IGenre,
     ICountry,
     FileUpload,
+    IDetailsOrder,
+    IOrder,
+    ISong,
     IUser
 };

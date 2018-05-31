@@ -10,6 +10,7 @@ import { Constant } from '../utils/constant';
 import { Subscription } from 'rxjs/Subscription';
 import { MatDialog, PageEvent } from '@angular/material';
 import { UpdateFormComponent }  from '../update-form/update-form.component'
+import { ArtistFormComponent } from '../artist-form/artist-form.component';
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
@@ -23,7 +24,8 @@ export class TablesComponent implements OnInit {
   constructor(
     private albumService : AlbumService,
     private dialog: MatDialog
-  ) { 
+  ) {
+    this.albumService.getPage(0, Constant.PAGE_SIZE)
     this.albumService.pageSubject.subscribe( page => {
       this.albums = page.content;
       this.totalOfAlbums = page.totalElements;
@@ -33,7 +35,15 @@ export class TablesComponent implements OnInit {
   }
   beginSearching() {
     this.isSearching = true;
-    this.albumService.getPageOnSearching(0, Constant.PAGE_SIZE, this.searchTerm)
+    this.albumService.getPageOnSearching(0, Constant.PAGE_SIZE, this.searchTerm.toString().trim())
+  }
+  getColor(status) { 
+    switch (status) {
+      case 0:
+        return 'red';
+      case 1:
+        return 'green';
+    }
   }
   closeSearching() {
     this.isSearching = false;
@@ -42,7 +52,7 @@ export class TablesComponent implements OnInit {
   }
   onPaginateChange(event : PageEvent) {
     if(this.isSearching)
-      this.albumService.getPageOnSearching(event.pageIndex, Constant.PAGE_SIZE, this.searchTerm)
+      this.albumService.getPageOnSearching(event.pageIndex, Constant.PAGE_SIZE, this.searchTerm.toString().trim())
     else
       this.albumService.getPage(event.pageIndex, Constant.PAGE_SIZE)
   }
@@ -50,7 +60,9 @@ export class TablesComponent implements OnInit {
   openDialog(type : number, payload?: IAlbum) {
     this.dialog.open(UpdateFormComponent, {data: {type: type, album: payload ? payload : null}});
   }
-
+  openArtistDialog() {
+    this.dialog.open(ArtistFormComponent)
+  }
   onChangeStatus(id: number) {
     this.albumService.changeAlbumStatus(id);
   }

@@ -1,25 +1,81 @@
 <div class="main-content">
-    <div class="header-table">
-        <span fxFlex="10">ID</span>
-        <span fxFlex="15" class="span-header">Customer</span>
-        <span fxFlex="15" class="span-header">Phone</span>
-        <span fxFlex="15" class="span-header">Email</span>
-        <span fxFlex="10" class="span-header">Date</span>
-        <span fxFlex="15" class="span-header">Status</span>
-        <span fxFlex class="span-header">Actions</span>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <mat-form-field class="search-form-field">
+        <input matInput type="text" placeholder="Enter text to search..." [(ngModel)]="searchTerm" />
+        <button mat-button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Search" (click)="beginSearching()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-button *ngIf="isSearching" matSuffix mat-icon-button aria-label="Clear" (click)="closeSearching()">
+        <mat-icon color="warn">close</mat-icon>
+      </button>
     </div>
-    <div class="book-row" *ngFor="let item of orders" fxLayout="row" fxLayoutAlign="space-between center">
-        <div fxFlex="10">{{item.id}}</div>
-        <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.name}}</div>
-        <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.phone}}</div>
-        <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.email}}</div>
-        <div fxFlex="10" fxLayoutAlign="center center">{{item.date | date:'dd-MM-yyyy'}}</div>
-        <div fxFlex="15" fxLayoutAlign="center center" [ngStyle]="{'color': getColor(item.status)}">{{item.status | orderStatus}}</div>
-        <div fxLayout="row" fxFlex fxLayoutAlign="center center">
-            <button mat-raised-button color="warn" *ngIf="item.status !== 2" (click)="nextStatus(item.id)">{{getTitleButton(item.status)}}</button>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div class="status">Status: </div>
+      <mat-radio-group [(ngModel)]="status" (change)="changeStatus()">
+        <mat-radio-button value="3" [style.color]="'black'">All</mat-radio-button>
+        <mat-radio-button value="0" [style.color]="'green'">New</mat-radio-button>
+        <mat-radio-button value="1" [style.color]="'blue'">Accepted</mat-radio-button>
+        <mat-radio-button value="2" [style.color]="'red'">Done</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="header-table">
+    <span fxFlex="5">ID</span>
+    <span fxFlex="15" class="span-header">Customer</span>
+    <span fxFlex="10" class="span-header">Phone</span>
+    <span fxFlex="15" class="span-header">Email</span>
+    <span fxFlex="25" class="span-header">Address</span>
+    <span fxFlex="7" class="span-header">Date</span>
+    <span fxFlex="15" class="span-header">Status</span>
+    <span fxFlex class="span-header">Actions</span>
+  </div>
+  <div class="book-row" *ngFor="let item of orders">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxFlex="5">{{item.id}}</div>
+      <div fxFlex="15" fxLayoutAlign="center center" class="name">{{item.name}}</div>
+      <div fxFlex="10" fxLayoutAlign="center center" class="phone">{{item.phone}}</div>
+      <div fxFlex="15" fxLayoutAlign="center center">{{item.customer.email}}</div>
+      <div fxFlex="25" fxLayoutAlign="center center">{{item.address}}</div>
+      <div fxFlex="7" fxLayoutAlign="center center">{{item.date | date:'dd-MM-yyyy'}}</div>
+      <div fxFlex="15" fxLayoutAlign="center center" [ngStyle]="{'color': getColor(item.status)}">{{item.status | orderStatus}}</div>
+      <div fxLayout="row" fxFlex fxLayoutAlign="center center">
+        <button mat-raised-button color="warn" *ngIf="item.status !== 2" (click)="nextStatus(item.id)">{{getTitleButton(item.status)}}</button>
+      </div>
+    </div>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            List details
+          </mat-panel-title>
+          <mat-panel-description>
+            {{getSum(item.details) | currency:'VND'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="header-table">
+          <span fxFlex="20" class="span-header">Name</span>
+          <span fxFlex="10" class="span-header">Artist</span>
+          <span fxFlex="10" class="span-header">Cover</span>
+          <span fxFlex="15" class="span-header">Price</span>
+          <span fxFlex="10" class="span-header">Quantity</span>
+          <span fxFlex class="span-header">Total</span>
         </div>
-    </div>
-    <mat-paginator [length]="totalOfOrders" [pageSize]="10" (page)="onPaginateChange($event)">
-    </mat-paginator>
+        <div class="book-row" *ngFor="let detail of item.details" fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxFlex="20" fxLayoutAlign="center center">{{detail.album.name}}</div>
+          <div fxFlex="10" fxLayoutAlign="center center">{{detail.album.artist.name}}</div>
+          <div fxFlex="10" fxLayoutAlign="center center">
+            <img src={{detail.album.cover}} width="50" height="50">
+          </div>
+          <div fxFlex="15" fxLayoutAlign="center center">{{detail.album.price | currency:'VND'}}</div>
+          <div fxFlex="10" fxLayoutAlign="center center">{{detail.quantity}}</div>
+          <div fxFlex fxLayoutAlign="center center">{{detail.quantity * detail.album.price | currency:'VND'}}</div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <mat-paginator [length]="totalOfOrders" [pageSize]="10" (page)="onPaginateChange($event)">
+  </mat-paginator>
 </div>
 <!-- <div>d</div> -->

@@ -5,6 +5,8 @@ import { AlbumService } from '../services/album.service';
 import { IAlbum, IGenre, IArtist, FileUpload } from '../interfaces/IEntity';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { FirebaseService } from '../services/firebase.service';
+import {MatSnackBar} from '@angular/material';
+
 @Component({
   selector: 'app-update-form',
   templateUrl: './update-form.component.html',
@@ -23,6 +25,7 @@ export class UpdateFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any,
     private albumService: AlbumService,
     private formBuilder: FormBuilder,
+    public snackBar: MatSnackBar,
     private firebase: FirebaseService
   ) {
     if (this.data.type === 0) {
@@ -96,12 +99,19 @@ export class UpdateFormComponent implements OnInit {
     }
   }
   confirm() {
-    if (this.data.type === 0)
-      //console.log(this.convertFormToAlbum())
+    if (this.data.type === 0){
       this.albumService.edit({ ...this.convertFormToAlbum(), id: this.data.album.id });
+      this.snackBar.open('Edit album', 'Done',{
+        duration: 2000
+      });
+    }
     else {
       this.albumService.add(this.convertFormToAlbum());
+      this.snackBar.open('Add new album', 'Done',{
+        duration: 2000
+      });
     }
+    
     this.dialogRef.close();
   }
   onNoClick() {
@@ -123,6 +133,9 @@ export class UpdateFormComponent implements OnInit {
             let songs = this.albumForm.get('songs').value;
             songs.push(data)
             this.albumForm.get('songs').setValue(songs);
+            this.snackBar.open('Add new song', 'Done',{
+              duration: 2000
+            });
           })
           this.albumForm.get('nameSong').setValue('');
           this.albumForm.get('genreSong').setValue(null);

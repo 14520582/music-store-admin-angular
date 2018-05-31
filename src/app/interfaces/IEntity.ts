@@ -1,5 +1,5 @@
 interface IArtist {
-    id: number;
+    id?: number;
     name?: string;
     sex?: number;
     yearofbirth?: number;
@@ -61,13 +61,15 @@ interface IDetailsOrder {
     order?: IOrder
 }
 interface IUser {
-    id: number;
-    username: string;
-    password: string;
-    name: string;
-    address: string;
-    role: string;
-    token: string;
+    id?: number;
+    username?: string;
+    password?: string;
+    name?: string;
+    address?: string;
+    phone?: string;
+    role?: string;
+    email?: string;
+    token?: string;
 }
 class FileUpload {
  

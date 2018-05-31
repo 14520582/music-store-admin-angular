@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { IAlbum, IGenre, IArtist, ISong } from '../interfaces/IEntity'
+import { IAlbum, IGenre, IArtist, ISong, ICountry } from '../interfaces/IEntity'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import { UpdateFormComponent } from '../update-form/update-form.component'
 @Injectable()
 export class AlbumService {
@@ -25,7 +26,6 @@ export class AlbumService {
       this.token = data.token;
       console.log(data)
     })
-    this.getPage(0, Constant.PAGE_SIZE)
   }
   getPage(page: number, pageSize: number) {
     this.http.get<any>(Constant.SERVER + 'album/page' + '?page=' + page + '&pagesize=' + pageSize).subscribe(data => {
@@ -42,6 +42,24 @@ export class AlbumService {
       })
     };
     return this.http.get<IGenre[]>(Constant.SERVER + 'genre/all', httpOptions)
+  }
+  getAllCountries(): Observable<ICountry[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': this.token
+      })
+    };
+    return this.http.get<ICountry[]>(Constant.SERVER + 'country/all', httpOptions)
+  }
+  addArtist(artist: IArtist): Observable<IArtist>  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': this.token
+      })
+    };
+    return this.http.post<IArtist>(Constant.SERVER + 'artist', artist, httpOptions)
   }
   getAllArtists(): Observable<IArtist[]> {
     const httpOptions = {

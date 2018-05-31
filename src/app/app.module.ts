@@ -34,7 +34,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 import { FirebaseService } from './services/firebase.service';
 import { OrderManagerComponent } from './order-manager/order-manager.component';
-import { OrderStatusPipe } from './pipes/order-status.pipe'
+import { OrderStatusPipe } from './pipes/order-status.pipe';
+import { UserService } from './services/user.service';
+import { ArtistFormComponent } from './artist-form/artist-form.component';
+import { GenreFormComponent } from './genre-form/genre-form.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,9 +48,11 @@ import { OrderStatusPipe } from './pipes/order-status.pipe'
     UpdateFormComponent,
     ConfirmDialog,
     OrderManagerComponent,
-    OrderStatusPipe
+    OrderStatusPipe,
+    ArtistFormComponent,
+    GenreFormComponent
   ],
-  entryComponents: [UpdateFormComponent, ConfirmDialog],
+  entryComponents: [UpdateFormComponent, ConfirmDialog, ArtistFormComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -76,7 +81,8 @@ import { OrderStatusPipe } from './pipes/order-status.pipe'
     AuthService,
     AlbumService,
     OrderService,
-    FirebaseService
+    FirebaseService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

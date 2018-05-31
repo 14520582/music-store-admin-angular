@@ -10,6 +10,12 @@ span{
 .header-table{
     border-bottom: 1px solid gray;
 }
+.status {
+    margin-right: 6px;
+    font-size: 14px;
+    padding-bottom: 4px;
+    font-weight: 600
+}
 .search-form-field {
     width: 200px;
     margin-top: 16px;
@@ -19,4 +25,20 @@ span{
 }
 .span-header {
     text-align: center
+}
+mat-expansion-panel {
+    margin-bottom: 6px;
+    margin-top: 6px
+}
+mat-panel-description {
+    color: black;
+    font-weight: 600
+}
+.phone {
+    color: blue;
+    font-weight: 500
+}
+.name {
+    font-style: italic;
+    color: black
 }

@@ -25,7 +25,6 @@ export class OrderService {
       this.token = data.token;
       console.log(data)
     })
-    this.getPage(0, Constant.PAGE_SIZE)
   }
   getPageOnSearching(page: number, pageSize: number, term: string) {
     const httpOptions = {
@@ -40,8 +39,21 @@ export class OrderService {
       this.orders = data.content;
     })
   }
+  getPageOnSearchingByStatus(page: number, pageSize: number, term: string, status: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': this.token
+      })
+    };
+    this.http.get<any>(Constant.SERVER + 'orders/searchandstatus' + '?page=' + page + '&pagesize=' + pageSize + '&term=' + term + '&status=' + status, httpOptions).subscribe(data => {
+      console.log(data)
+      this.pageSubject.next(data);
+      this.orders = data.content;
+    })
+  }
   getPage(page: number, pageSize: number) {
-    console.log(this.token)
+    console.log(page + ' and ' + pageSize)
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -49,6 +61,20 @@ export class OrderService {
       }),
     };
     this.http.get<any>(Constant.SERVER + 'orders/page?page=' + page + '&pagesize=' + pageSize, httpOptions).subscribe(data => {
+      console.log(data)
+      this.pageSubject.next(data);
+      this.orders = data.content;
+    })
+  }
+  getPageByStatus(page: number, pageSize: number, status: number) {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Token': this.token
+      }),
+    };
+    this.http.get<any>(Constant.SERVER + 'orders/pageandstatus?page=' + page + '&pagesize=' + pageSize + '&status=' + status, httpOptions).subscribe(data => {
       console.log(data)
       this.pageSubject.next(data);
       this.orders = data.content;

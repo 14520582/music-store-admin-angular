@@ -1,0 +1,25 @@
+<div class="dialog-container">
+  <h3 mat-dialog-title>Add new Artist</h3>
+  <form [formGroup]="artistForm">
+    <div class="form-group" fxLayout="column">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Select artist's country" formControlName="country">
+          <mat-option *ngFor="let country of countries" [value]="country">{{country.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Female or male" formControlName="sex">
+          <mat-option value="1">Male</mat-option>
+          <mat-option value="0">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Year Of Birth" formControlName="yearofbirth">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="!artistForm.valid" (click)="confirm()">Save</button>
+  </form>
+</div>

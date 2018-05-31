@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'table', component: TablesComponent },
   { path: 'order', component: OrderManagerComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+  { path: '', redirectTo: 'table', pathMatch: 'full' }
 ];
 
 @NgModule({

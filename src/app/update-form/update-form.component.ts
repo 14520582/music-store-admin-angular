@@ -66,9 +66,11 @@ export class UpdateFormComponent implements OnInit {
     this.currentFileUpload = new FileUpload();
     this.albumService.getAllGenres().subscribe( data => {
       this.dataGenres = data
+	  console.log(data)
     })
     this.albumService.getAllArtists().subscribe( data => {
       this.dataArtists = data
+	  console.log(data)
     })
   }
   ngOnInit() {

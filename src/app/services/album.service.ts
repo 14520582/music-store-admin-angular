@@ -122,7 +122,9 @@ export class AlbumService {
     console.log(item)
     this.http.post<IAlbum>(Constant.SERVER + 'album', item, httpOptions).subscribe(data => {
       this.dialog.closeAll();
-      this.albums.push(data)
+      this.albums.unshift(data)
+	  if(this.albums.length > 10)
+		this.albums.pop()
       let temp: any = this.pageSubject.getValue()
       temp.content = this.albums
       this.pageSubject.next(temp)

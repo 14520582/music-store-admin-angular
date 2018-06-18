@@ -47,11 +47,15 @@ export class AuthService {
       })
     };
     return this.http.post<any>(Constant.SERVER + 'login', body, httpOptions).subscribe( res => {
-        this.myStorage.setItem('userInfo', JSON.stringify(res));
-        this.logged = true;
-        this.userInfo.next(res);
-        this.error.next('');
-        this.dialog.closeAll();
+		if( res.role !== 'ROLE_ADMIN' ) {
+			this.error.next('Tài khoản không có quyền truy cập!');
+		} else {
+			this.myStorage.setItem('userInfo', JSON.stringify(res));
+			this.logged = true;
+			this.userInfo.next(res);
+			this.error.next('');
+			this.dialog.closeAll();
+		}
       },
       error => {
         if(error.status === 401)
